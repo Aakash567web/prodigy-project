@@ -1,0 +1,79 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.game-container {
+  text-align: center;
+  background: #1a1a1a;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 60px rgba(255, 105, 180, 0.4);
+}
+
+h1 {
+  margin-bottom: 5px;
+  color: #ff69b4; /* hot pink */
+}
+
+.player-info {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+.status {
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #dda0dd; /* plum */
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  grid-gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background: #000;
+  border: 5px solid #ff69b4; /* pink border */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  border-radius: 10px;
+}
+
+.cell:hover {
+  background: linear-gradient(135deg, #ff69b4, #800080); /* pink to purple gradient */
+}
+
+.cell.clicked {
+  background: #0c0c0c; /* deep purple when clicked */
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background: #ff69b4;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #da70d6; /* orchid */
+}
