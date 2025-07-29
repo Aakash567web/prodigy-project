@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhiteDevil Task Matrix</title>
+  <style>
+    :root {
+      --main-bg: #0f0f1e;
+      --container-bg: #1c1c3c;
+      --accent: #ffffff;
+      --high: #ff005c;
+      --medium: #ffae00;
+      --low: #00d8a7;
+      --done: #999;
+      --font: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(120deg, #0f0f1e, #1a1a2e);
+      font-family: var(--font);
+      color: var(--accent);
+      margin: 0;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: var(--container-bg);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 25px;
+      font-size: 2em;
+      background: linear-gradient(to right, #00fff3, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input, select, button {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+
+    input, select {
+      background: #2c2c4c;
+      color: #eee;
+    }
+
+    button {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      transition: background 0.3s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: linear-gradient(to right, #ff512f, #dd2476);
+      transform: scale(1.03);
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #22223c;
+      border-left: 6px solid var(--low);
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    li.high { border-color: var(--high); }
+    li.medium { border-color: var(--medium); }
+    li.low { border-color: var(--low); }
+
+    li.done span {
+      text-decoration: line-through;
+      color: var(--done);
+      opacity: 0.6;
+    }
+
+    li div button {
+      background: #444;
+      margin-left: 6px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85em;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    li div button:hover {
+      background: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>WhiteDevil Futuristic To-Do Matrix</h1>
+    <input type="text" id="taskInput" placeholder="Enter a task like a legend..." />
+    <select id="priority">
+      <option value="low">Low ⚡</option>
+      <option value="medium">Medium 🔥</option>
+      <option value="high">High ☠</option>
+    </select>
+    <button id="addBtn">➕ Add Task</button>
+    <button id="clearBtn">🧹 Clear All</button>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const addBtn = document.getElementById('addBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const taskInput = document.getElementById('taskInput');
+      const taskList = document.getElementById('taskList');
+
+      addBtn.addEventListener('click', addTask);
+      clearBtn.addEventListener('click', clearAll);
+      taskInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') addTask();
+      });
+
+      function addTask() {
+        const text = taskInput.value.trim();
+        const priority = document.getElementById('priority').value;
+
+        if (text === '') {
+          alert("Type something worthy, WhiteDevil.");
+          return;
+        }
+
+        const li = document.createElement('li');
+        li.classList.add(priority);
+        li.innerHTML = `
+          <span>${text}</span>
+          <div>
+            <button onclick="toggleStatus(this)">✔</button>
+            <button onclick="editTask(this)">✏</button>
+            <button onclick="deleteTask(this)">🗑</button>
+          </div>
+        `;
+        taskList.appendChild(li);
+        taskInput.value = '';
+      }
+
+      window.toggleStatus = function(button) {
+        const li = button.closest('li');
+        li.classList.toggle('done');
+        button.textContent = li.classList.contains('done') ? '↩' : '✔';
+      };
+
+      window.editTask = function(button) {
+        const li = button.closest('li');
+        const span = li.querySelector('span');
+        const newText = prompt('Edit your command:', span.textContent);
+        if (newText && newText.trim() !== '') {
+          span.textContent = newText.trim();
+        }
+      };
+
+      window.deleteTask = function(button) {
+        const li = button.closest('li');
+        li.remove();
+      };
+
+      function clearAll() {
+        if (confirm("Clear all your tasks, my Lord?")) {
+          taskList.innerHTML = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
